@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "api/start-bot.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/start",
+      "dest": "/api/start-bot.js"
+    }
+  ]
+}
