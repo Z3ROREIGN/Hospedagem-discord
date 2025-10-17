@@ -145,3 +145,43 @@ async def on_ready():
 
 # Run the bot
 bot.run(os.getenv('DISCORD_BOT_TOKEN'))
+    # Grant permissions to the specified user
+    user_permissions[user_id] = True
+    user_bot_limits[user_id] = bot_limit
+
+    await ctx.send(f'Permissions granted to user {user_id} with a bot limit of {bot_limit}.')
+
+# Command to remove permissions from a user
+@bot.command(name='removeperm')
+async def remove_permissions(ctx, user_id: int):
+    # Check if the user is authorized to remove permissions
+    if ctx.author.id != 1098745384848859258:
+        await ctx.send('Only the authorized user can remove permissions.')
+        return
+
+    # Remove permissions from the specified user
+    user_permissions[user_id] = False
+    user_bot_limits[user_id] = 0
+
+    await ctx.send(f'Permissions removed from user {user_id}.')
+
+# Command to edit the bot limit for a user
+@bot.command(name='editarquantia')
+async def edit_bot_limit(ctx, user_id: int, bot_limit: int):
+    # Check if the user is authorized to edit the bot limit
+    if ctx.author.id != 1098745384848859258:
+        await ctx.send('Only the authorized user can edit the bot limit.')
+        return
+
+    # Edit the bot limit for the specified user
+    user_bot_limits[user_id] = bot_limit
+
+    await ctx.send(f'Bot limit edited for user {user_id} to {bot_limit}.')
+
+# Event to handle the bot startup
+@bot.event
+async def on_ready():
+    print(f'Logged in as {bot.user}')
+
+# Run the bot
+bot.run(os.getenv('DISCORD_BOT_TOKEN'))
